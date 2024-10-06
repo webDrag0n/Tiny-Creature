@@ -27,8 +27,17 @@ public class GameSystem : MonoBehaviour
         game_states.timer += Time.deltaTime;
         if (game_states.game_status == GameStatus.in_game_playing && game_states.timer >= game_settings.game_time_limit)
         {
-            // Round won;
-            game_states.game_status = GameStatus.in_game_won_paused;
+            // If money reached required amount
+            if (game_states.player_money_ingame > 300)
+            {
+                // Round won;
+                game_states.game_status = GameStatus.in_game_won_paused;
+            }
+            else
+            {
+                // Round lost;
+                game_states.game_status = GameStatus.in_game_lost_paused;
+            }
         }
 
         foreach (Floor floor in building.GetComponent<Building>().floors)
