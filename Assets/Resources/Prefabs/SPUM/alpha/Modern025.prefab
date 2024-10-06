@@ -2653,6 +2653,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8019409911742883338}
   - component: {fileID: 8296623549426176018}
+  - component: {fileID: 7288091277262263762}
   m_Layer: 5
   m_Name: Modern025
   m_TagString: Untagged
@@ -2702,6 +2703,21 @@ MonoBehaviour:
   UnitTypeChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &7288091277262263762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5370562344304124828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0917e79206a24e5e8532a936c9712da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  apperance: 0
+  target_pos: {x: 0, y: 0}
+  _prefabs: {fileID: 0}
 --- !u!1 &5478030917662104306
 GameObject:
   m_ObjectHideFlags: 0
