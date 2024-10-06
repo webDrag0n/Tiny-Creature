@@ -44,7 +44,7 @@ public class Floor : MonoBehaviour
     {
         for (int i = 0; i < queue.Count; i++)
         {
-            queue[i].transform.position = (Vector2)queue[i].transform.position - new Vector2(people_interval, 0);
+            queue[i].GetComponent<People>().target_pos = queue[i].GetComponent<People>().target_pos - new Vector2(people_interval, 0);
         }
     }
 

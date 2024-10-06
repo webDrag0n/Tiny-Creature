@@ -6,19 +6,37 @@ using UnityEngine.SceneManagement;
 public class GameSystem : MonoBehaviour
 {
     public GameSettings game_settings;
+    public GameStates game_states;
     private GameObject building;
     public BuildingGenerator bg;
     // Start is called before the first frame update
     void Start()
     {
         SceneManager.SetActiveScene(SceneManager.GetSceneByName("Game"));
-        building = bg.Generate(game_settings.init_building_levels, game_settings.init_elevator_speed, game_settings.init_elevator_max_capacity);
+        game_settings.init_building_levels = game_states.building_levels;
+        building = bg.Generate(game_settings);
         Camera.main.orthographicSize = game_settings.init_building_levels;
+        game_states.timer = 0;
+        game_states.player_life = game_settings.init_player_life;
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
-        
+        game_states.timer += Time.deltaTime;
+        if (game_states.game_status == GameStatus.in_game_playing && game_states.timer >= game_settings.game_time_limit)
+        {
+            // Round won;
+            game_states.game_status = GameStatus.in_game_won_paused;
+        }
+
+        foreach (Floor floor in building.GetComponent<Building>().floors)
+        {
+
+            if (floor.GetAmountOfPeople() >= floor.max_people_allowed)
+            {
+                game_states.game_status = GameStatus.in_game_lost_paused;
+            }
+        }
     }
 }

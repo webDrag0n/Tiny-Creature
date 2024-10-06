@@ -20,7 +20,7 @@ public class BuildingGenerator : MonoBehaviour
         
     }
 
-    public GameObject Generate(int _levels, float _elevator_speed, int _elevator_max_capacity)
+    public GameObject Generate(GameSettings game_settings)
     {
         Vector2 ground_base = new Vector2(0, -2);
 
@@ -29,14 +29,26 @@ public class BuildingGenerator : MonoBehaviour
         Building building = building_gameObject.GetComponent<Building>();
 
         // Generate floors inside building
-        building.Init(_levels, ground_base);
+        building.Init(game_settings.init_building_levels, ground_base);
 
 
         // Generate elevator
-        GameObject elevator = Instantiate(elevator_prefab, ground_base + new Vector2(-2.5f, 0), Quaternion.identity, building_gameObject.transform);
+        GameObject elevator = Instantiate(elevator_prefab, ground_base + new Vector2(-2.6f, 0), Quaternion.identity, building_gameObject.transform);
         elevator.GetComponent<Elevator>().building = building;
-        elevator.GetComponent<Elevator>().move_speed = _elevator_speed;
-        elevator.GetComponent<Elevator>().max_capacity = _elevator_max_capacity;
+        elevator.GetComponent<Elevator>().move_speed = game_settings.init_elevator_speed;
+        elevator.GetComponent<Elevator>().max_capacity = game_settings.init_elevator_max_capacity;
+        elevator.GetComponent<ElevatorController>().control_up = game_settings.control_elevator_up;
+        elevator.GetComponent<ElevatorController>().control_down = game_settings.control_elevator_down;
+        elevator.GetComponent<ElevatorController>().control_door = game_settings.control_elevator_door;
+
+        // Generate second elevator
+        GameObject elevator2 = Instantiate(elevator_prefab, ground_base + new Vector2(-3.7f, 0), Quaternion.identity, building_gameObject.transform);
+        elevator2.GetComponent<Elevator>().building = building;
+        elevator2.GetComponent<Elevator>().move_speed = game_settings.init_elevator_speed;
+        elevator2.GetComponent<Elevator>().max_capacity = game_settings.init_elevator_max_capacity;
+        elevator2.GetComponent<ElevatorController>().control_up = game_settings.control_elevator2_up;
+        elevator2.GetComponent<ElevatorController>().control_down = game_settings.control_elevator2_down;
+        elevator2.GetComponent<ElevatorController>().control_door = game_settings.control_elevator2_door;
 
         return building_gameObject;
     }

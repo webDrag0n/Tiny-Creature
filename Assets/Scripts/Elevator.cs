@@ -25,10 +25,13 @@ public class Elevator : MonoBehaviour
 
     public float timer;
     private Vector2 init_pos;
+    public Vector2 target_pos;
 
     // Start is called before the first frame update
     void Start()
     {
+        capacity_display = GetComponentInChildren<TMPro.TMP_Text>();
+
         move_speed = 1.3f;
         board_speed = 1;
         direction = 1;
@@ -38,12 +41,12 @@ public class Elevator : MonoBehaviour
 
         timer = 0;
         init_pos = transform.position;
-        capacity_display = GetComponentInChildren<TMPro.TMP_Text>();
+        target_pos = init_pos;
     }
 
     void Update()
     {
-        transform.position = init_pos + new Vector2(0, 1.05f * current_level);
+        transform.position = Vector2.Lerp(transform.position, target_pos, Time.deltaTime * 10);
 
         // Show capacity in inGame GUI
         capacity_display.text = people_amount_inside + "/" + max_capacity;
@@ -63,18 +66,21 @@ public class Elevator : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        target_pos = init_pos + new Vector2(0, 1.05f * current_level);
         if (is_door_opened)
         {
             door.SetActive(true);
             timer += Time.fixedDeltaTime;
             if (building.floors[current_level].is_ground_floor)
             {
+                // People get out at ground floor
                 ReleasePeople();
             }
             else
             {
                 if (timer > 1 / board_speed && people_amount_inside < max_capacity)
                 {
+                    // People get in at other floors
                     timer = 0;
                     PushInPeopleFromFloor(current_level);
                 }

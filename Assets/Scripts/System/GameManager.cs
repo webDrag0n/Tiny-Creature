@@ -11,44 +11,86 @@ public class GameManager : MonoBehaviour
     public GameObject menu_panel;
     public GameObject game_panel;
     public GameObject game_pause_panel;
+    public GameObject game_won_pause_panel;
+    public GameObject game_lost_pause_panel;
+    public GameObject game_end_panel;
+    public Dictionary<string, GameObject> game_panels;
     public Slider slider;
-    public GameStatus game_status;
     public GameStates game_states;
+
     // Start is called before the first frame update
     void Start()
     {
-        game_status = GameStatus.in_menu;
+        game_states.game_status = GameStatus.in_menu;
+        game_panels = new Dictionary<string, GameObject>();
+        game_panels.Add("menu", menu_panel);
+        game_panels.Add("game", game_panel);
+        game_panels.Add("game_pause", game_pause_panel);
+        game_panels.Add("game_won_pause", game_won_pause_panel);
+        game_panels.Add("game_lost_pause", game_lost_pause_panel);
+        game_panels.Add("game_end", game_end_panel);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && game_status == GameStatus.in_game_playing)
+        if (Input.GetKeyDown(KeyCode.Escape) && game_states.game_status == GameStatus.in_game_playing)
         {
-            game_pause_panel.SetActive(true);
+            OpenPanel("game_pause");
+            PauseGame();
+        }
+
+        // On game won
+        if (game_states.game_status == GameStatus.in_game_won_paused)
+        {
+            OpenPanel("game_won_pause");
+            PauseGame();
+        }
+
+        // On game lose
+        if (game_states.game_status == GameStatus.in_game_lost_paused)
+        {
+            if (game_states.player_life == 0)
+            {
+                // 0 life left -> game end
+                OpenPanel("game_end");
+            }
+            else
+            {
+                // Still have some life
+                OpenPanel("game_lost_pause");
+            }
+            
             PauseGame();
         }
     }
 
+    public void NextLevel()
+    {
+        game_states.building_levels++;
+        game_states.timer = 0;
+        game_states.player_life = 3;
+        RestartGame();
+    }
+
     public void LoadMenu()
     {
-        game_status = GameStatus.in_menu;
-        game_panel.SetActive(false);
+        game_states.game_status = GameStatus.in_menu;
         OffLoadGame();
-        menu_panel.SetActive(true);
+        OpenPanel("menu");
     }
 
     public void OffLoadMenu()
     {
-        menu_panel.SetActive(false);
+        OpenPanel("None");
     }
 
     public void LoadGame()
     {
-        game_status = GameStatus.in_game_paused;
+        game_states.game_status = GameStatus.in_game_paused;
         Time.timeScale = 0;
         OffLoadMenu();
-        game_panel.SetActive(true);
+        OpenPanel("game");
         // Load game state from saves to scriptable object
 
         // Load game scene
@@ -63,26 +105,52 @@ public class GameManager : MonoBehaviour
     public void ResumeGame()
     {
         Time.timeScale = 1;
-        game_status = GameStatus.in_game_playing;
+        game_states.game_status = GameStatus.in_game_playing;
         game_states.is_intro_passed = true;
     }
 
     public void PauseGame()
     {
         Time.timeScale = 0;
-        game_status = GameStatus.in_game_paused;
-        SceneManager.SetActiveScene(SceneManager.GetSceneByName("MainMenu"));
+        game_states.game_status = GameStatus.in_game_paused;
+    }
+
+    public void RestartGame()
+    {
+        // Reload game scene
+        OffLoadGame();
+        // Reset game status
+        game_states.LevelReset();
+        OffLoadMenu();
+        LoadGame();
     }
 
     public void OffLoadGame()
     {
-        game_panel.SetActive(false);
-        game_pause_panel.SetActive(false);
         SceneManager.UnloadSceneAsync("Game");
     }
 
     public void SaveSettings()
     {
         settings.background_music_volume = (int)(slider.value * 10000);
+    }
+
+    // Open panel with corresponding panel name and close all other panels
+    public void OpenPanel(string panel_name)
+    {
+        SceneManager.SetActiveScene(SceneManager.GetSceneByName("MainMenu"));
+        foreach (KeyValuePair<string, GameObject> name_panel_pair in game_panels)
+        {
+            if (panel_name == name_panel_pair.Key)
+            {
+                // Open corresponding panel
+                name_panel_pair.Value.SetActive(true);
+            }
+            else
+            {
+                // Close other panels
+                name_panel_pair.Value.SetActive(false);
+            }
+        }
     }
 }
