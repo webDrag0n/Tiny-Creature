@@ -10,10 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0157e143c3e03264b9ded228393c1eee, type: 3}
-  m_Name: New Level Setting
+  m_Name: Level 1
   m_EditorClassIdentifier: 
   level_index: 0
-  level_color: 
-  lambda_common: []
-  lambda_high_priority: []
-  lambda_boss: []
+  num_level: 3
+  time_limit: 100
+  generate_speed: 1
+  level_color: 000000000000000000000000
+  lambda_common: 0
+  num_of_high_priority: -1
+  num_of_boss: 0
+  lambda_high_priority: 0
+  lambda_boss: 0
