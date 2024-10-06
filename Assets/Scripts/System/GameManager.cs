@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
 {
 
     public GameSettings settings;
+    public GameStates game_states_default;
+    public GameStates game_states;
     public GameObject menu_panel;
     public GameObject game_panel;
     public GameObject game_pause_panel;
@@ -16,7 +18,6 @@ public class GameManager : MonoBehaviour
     public GameObject game_end_panel;
     public Dictionary<string, GameObject> game_panels;
     public Slider slider;
-    public GameStates game_states;
 
     // Start is called before the first frame update
     void Start()
@@ -56,12 +57,12 @@ public class GameManager : MonoBehaviour
             game_states.player_money_ingame = 0;
             if (game_states.player_life == 0)
             {
-                // 0 life left -> game end
+                // 0 life left -> game end (bad ending)
                 OpenPanel("game_end");
             }
             else
             {
-                // Still have some life
+                // Still have some life -> allow replay
                 OpenPanel("game_lost_pause");
             }
             
@@ -87,6 +88,11 @@ public class GameManager : MonoBehaviour
     public void OffLoadMenu()
     {
         OpenPanel("None");
+    }
+
+    public void NewGame()
+    {
+        game_states.Load(game_states_default);
     }
 
     public void LoadGame()
