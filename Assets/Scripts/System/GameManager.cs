@@ -37,6 +37,7 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape) && game_states.game_status == GameStatus.in_game_playing)
         {
+            game_states.game_status = GameStatus.in_game_paused;
             OpenPanel("game_pause");
             PauseGame();
         }
@@ -93,6 +94,7 @@ public class GameManager : MonoBehaviour
     public void NewGame()
     {
         game_states.Load(game_states_default);
+        LoadGame();
     }
 
     public void LoadGame()
@@ -122,7 +124,6 @@ public class GameManager : MonoBehaviour
     public void PauseGame()
     {
         Time.timeScale = 0;
-        game_states.game_status = GameStatus.in_game_paused;
     }
 
     public void RestartGame()
@@ -137,6 +138,7 @@ public class GameManager : MonoBehaviour
 
     public void OffLoadGame()
     {
+        game_states.game_status = GameStatus.in_menu;
         SceneManager.UnloadSceneAsync("Game");
     }
 

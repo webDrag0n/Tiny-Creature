@@ -16,7 +16,7 @@ public class GameSystem : MonoBehaviour
         SceneManager.SetActiveScene(SceneManager.GetSceneByName("Game"));
         game_settings.init_building_levels = game_states.building_levels;
         building = bg.Generate(game_settings);
-        Camera.main.orthographicSize = game_settings.init_building_levels;
+        Camera.main.orthographicSize = 6 + game_settings.init_building_levels / 2;
         game_states.timer = 0;
         game_states.player_life = game_settings.init_player_life;
     }
