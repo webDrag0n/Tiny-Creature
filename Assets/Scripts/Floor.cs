@@ -1,6 +1,44 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.RuleTile.TilingRuleOutput;
+
+public class PeopleGenerator: MonoBehaviour
+{
+    private enum GeneratorFlag
+    {
+        NORMAL,
+        YELLOW,
+        BLUE,
+    }
+
+    public GameObject people_prefab;
+
+    public float lambda_common;
+    public float lambda_high_priority;
+    public float lambda_boss;
+
+    internal void Start()
+    {
+        return;
+    }
+
+    // Update is called once per frame
+    internal void FixedUpdate()
+    {
+        return;
+    }
+
+    public GameObject Generate(Vector2 position, Quaternion quad, UnityEngine.Transform transform)
+    {
+        GameObject genrated_gameobj = Instantiate(
+            people_prefab,
+            position,
+            quad,
+            transform
+        );
+        return genrated_gameobj;
+    }
+}
 
 public class Floor : MonoBehaviour
 {
@@ -11,9 +49,11 @@ public class Floor : MonoBehaviour
     public float people_interval;
     public float speed_generate_people;
     public float timer;
+
     public int floor_index;
+
     // Start is called before the first frame update
-    void Start()
+    internal void Start()
     {
         people_interval = 0.8f;
         speed_generate_people = Random.Range(0.1f, 0.3f);
@@ -21,7 +61,7 @@ public class Floor : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    internal void FixedUpdate()
     {
         if (!is_ground_floor && GetAmountOfPeople() < max_people_allowed)
         {
@@ -32,7 +72,6 @@ public class Floor : MonoBehaviour
                 EnQueue();
             }
         }
-        
     }
 
     public int GetAmountOfPeople()
@@ -44,8 +83,8 @@ public class Floor : MonoBehaviour
     {
         for (int i = 0; i < queue.Count; i++)
         {
-            queue[i].GetComponent<People>().target_pos = queue[i].GetComponent<People>().target_pos
-                - new Vector2(people_interval - Random.Range(-0.05f, 0.05f), 0);
+            queue[i].GetComponent<People>().target_pos = queue[i].GetComponent<People>().target_pos - 
+                                                         new Vector2(people_interval - Random.Range(-0.05f, 0.05f), 0);
         }
     }
 
@@ -58,14 +97,15 @@ public class Floor : MonoBehaviour
 
     public void EnQueue()
     {
+        Vector2 new_pos = (Vector2)transform.position +
+                          new Vector2(-2f + queue.Count * people_interval + Random.Range(-0.1f, 0.1f),-0.4f + Random.Range(-0.1f, 0.1f));                             // y
         GameObject new_people = Instantiate(
             people_prefab,
-            (Vector2)transform.position + new Vector2(
-                // x
-                -2f + queue.Count * people_interval + Random.Range(-0.1f, 0.1f),
-                // y
-                -0.4f + Random.Range(-0.1f, 0.1f)),
-            Quaternion.identity, transform);
+            new_pos,
+            Quaternion.identity,
+            transform
+        );
+
         queue.Add(new_people);
     }
 }

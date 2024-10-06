@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Elevator : MonoBehaviour
@@ -14,10 +12,13 @@ public class Elevator : MonoBehaviour
 
     // floor(s) per second
     public float move_speed;
+
     // people(s) per second;
     public float board_speed;
+
     // -1 down/1 up
     public int direction;
+
     public int max_capacity;
     public int people_amount_inside;
     public int current_level;
@@ -30,7 +31,7 @@ public class Elevator : MonoBehaviour
     public Vector2 target_pos;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         capacity_display = GetComponentInChildren<TMPro.TMP_Text>();
 
@@ -48,7 +49,7 @@ public class Elevator : MonoBehaviour
         target_pos = init_pos;
     }
 
-    void Update()
+    private void Update()
     {
         transform.position = Vector2.Lerp(transform.position, target_pos, Time.deltaTime * 10);
 
@@ -68,7 +69,7 @@ public class Elevator : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         target_pos = init_pos + new Vector2(0, 1.05f * current_level);
         if (is_door_opened)
@@ -89,7 +90,6 @@ public class Elevator : MonoBehaviour
                     PushInPeopleFromFloor(current_level);
                 }
             }
-            
         }
         else
         {
@@ -101,10 +101,9 @@ public class Elevator : MonoBehaviour
                 Move(direction);
             }
         }
-        
     }
 
-    void Move(int _delta_levels)
+    private void Move(int _delta_levels)
     {
         // delta_levels = 1: move up 1 level, -1: move down 1 level
         current_level += _delta_levels;
@@ -128,11 +127,10 @@ public class Elevator : MonoBehaviour
                 // Auto change direction to return
                 direction = -direction;
             }
-            
         }
     }
 
-    void PushInPeopleFromFloor(int _floor)
+    private void PushInPeopleFromFloor(int _floor)
     {
         if (building.GetAmountOfPeopleInFloor(_floor) > 0)
         {
@@ -141,7 +139,7 @@ public class Elevator : MonoBehaviour
         }
     }
 
-    void ReleasePeople()
+    private void ReleasePeople()
     {
         game_states.player_money_ingame += people_amount_inside * 100;
         people_amount_inside = 0;
