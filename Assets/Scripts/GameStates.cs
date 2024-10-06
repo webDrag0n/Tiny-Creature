@@ -14,6 +14,7 @@ public class GameStates : ScriptableObject
     public int boss_value;
     public float booster_speed;
     public float booster_duration;
+    public bool is_auto_return;
 
     public int building_levels;
     public int player_life;
@@ -41,6 +42,7 @@ public class GameStates : ScriptableObject
         boss_value = _game_state.boss_value;
         booster_speed = _game_state.booster_speed;
         booster_duration = _game_state.booster_duration;
+        is_auto_return = _game_state.is_auto_return;
 
         building_levels = _game_state.building_levels;
         player_life = _game_state.player_life;

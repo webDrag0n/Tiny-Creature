@@ -33,9 +33,10 @@ public class GameSystem : MonoBehaviour
 
         foreach (Floor floor in building.GetComponent<Building>().floors)
         {
-
+            // Floor full
             if (floor.GetAmountOfPeople() >= floor.max_people_allowed)
             {
+                // Penalty on money
                 money_timer += Time.deltaTime;
                 if (money_timer >= 1000) game_states.player_money_ingame -= 10;
             }

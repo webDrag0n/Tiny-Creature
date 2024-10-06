@@ -7,6 +7,7 @@ public class Building : MonoBehaviour
     public Vector2 ground_base;
     public int levels;
     public int ground_floor_level = 0;
+    public Color ground_floor_color = Color.green;
     public List<Floor> floors;
     public GameObject floor_prefab;
     public float floor_interval = 1.05f;
@@ -16,6 +17,16 @@ public class Building : MonoBehaviour
         levels = _levels;
         ground_base = _ground_base;
         floor_interval = 1.05f;
+
+        if (levels <= 8)
+        {
+            ground_floor_level = 0;
+        }
+        else if (levels > 8)
+        {
+            ground_floor_level = levels - 8;
+        }
+
         for (int i = 0; i < _levels; i++)
         {
             GameObject new_floor = Instantiate(floor_prefab, ground_base + new Vector2(0, 1.05f * i), Quaternion.identity, transform);
@@ -23,10 +34,13 @@ public class Building : MonoBehaviour
 
             if (i == ground_floor_level)
             {
+                // Set ground floor checkbox property and color
                 new_floor.GetComponent<Floor>().is_ground_floor = true;
+                new_floor.GetComponent<SpriteRenderer>().color = ground_floor_color;
             }
             floors.Add(new_floor.GetComponent<Floor>());
         }
+
     }
 
     public int GetAmountOfPeopleInFloor(int _floor)

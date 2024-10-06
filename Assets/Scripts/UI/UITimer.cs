@@ -5,6 +5,7 @@ using UnityEngine;
 public class UITimer : MonoBehaviour
 {
     public TMPro.TMP_Text timer_text;
+    public GameSettings game_settings;
     public GameStates game_states;
     // Start is called before the first frame update
     void Start()
@@ -15,6 +16,6 @@ public class UITimer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        timer_text.text = (((int)(game_states.timer*1000))/1000).ToString();
+        timer_text.text = (((int)((game_settings.game_time_limit - game_states.timer) * 1000))/1000.0f).ToString();
     }
 }

@@ -23,6 +23,7 @@ public class Elevator : MonoBehaviour
     public int current_level;
 
     public bool is_door_opened;
+    public bool is_auto_return;
 
     public float timer;
     private Vector2 init_pos;
@@ -39,6 +40,8 @@ public class Elevator : MonoBehaviour
         max_capacity = game_states.capacity;
         people_amount_inside = 0;
         current_level = 0;
+
+        is_auto_return = game_states.is_auto_return;
 
         timer = 0;
         init_pos = transform.position;
@@ -105,14 +108,27 @@ public class Elevator : MonoBehaviour
     {
         // delta_levels = 1: move up 1 level, -1: move down 1 level
         current_level += _delta_levels;
+        // Reached bottom
         if (current_level < 0)
         {
             current_level = 0;
+            if (is_auto_return)
+            {
+                // Auto change direction to return
+                direction = -direction;
+            }
         }
 
+        // Reached Top
         if (current_level >= building.levels)
         {
             current_level = building.levels - 1;
+            if (is_auto_return)
+            {
+                // Auto change direction to return
+                direction = -direction;
+            }
+            
         }
     }
 

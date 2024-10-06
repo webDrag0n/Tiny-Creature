@@ -12,17 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62d13e355789e4cdaad37ac27914f652, type: 3}
   m_Name: GameStates
   m_EditorClassIdentifier: 
-  is_intro_passed: 0
+  is_intro_passed: 1
   difficulty: 0
   lost_counts: 0
-  move_speed: 1.3
-  capacity: 10
+  move_speed: 2.1399992
+  capacity: 3
   boss_value: 5
   booster_speed: 2
   booster_duration: 2
-  building_levels: 5
+  is_auto_return: 0
+  building_levels: 7
   player_life: 3
-  player_money_total: 0
+  player_money_total: 200
   player_money_ingame: 0
-  timer: 0
-  game_status: 0
+  timer: 15.002567
+  game_status: 1
