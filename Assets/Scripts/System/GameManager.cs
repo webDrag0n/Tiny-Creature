@@ -43,6 +43,8 @@ public class GameManager : MonoBehaviour
         // On game won
         if (game_states.game_status == GameStatus.in_game_won_paused)
         {
+            game_states.player_money_total += game_states.player_money_ingame;
+            game_states.player_money_ingame = 0;
             OpenPanel("game_won_pause");
             PauseGame();
         }
@@ -50,6 +52,8 @@ public class GameManager : MonoBehaviour
         // On game lose
         if (game_states.game_status == GameStatus.in_game_lost_paused)
         {
+            game_states.player_money_total += game_states.player_money_ingame;
+            game_states.player_money_ingame = 0;
             if (game_states.player_life == 0)
             {
                 // 0 life left -> game end

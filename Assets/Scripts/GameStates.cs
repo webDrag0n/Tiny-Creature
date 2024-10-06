@@ -9,8 +9,16 @@ public class GameStates : ScriptableObject
     public int difficulty;
     public int lost_counts;
 
+    public float move_speed;
+    public int capacity;
+    public int boss_value;
+    public float booster_speed;
+    public float booster_duration;
+
     public int building_levels;
     public int player_life;
+    public int player_money_total;
+    public int player_money_ingame;
     public float timer;
     public GameStatus game_status;
 

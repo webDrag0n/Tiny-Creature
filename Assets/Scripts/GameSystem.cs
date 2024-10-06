@@ -9,6 +9,7 @@ public class GameSystem : MonoBehaviour
     public GameStates game_states;
     private GameObject building;
     public BuildingGenerator bg;
+    private float money_timer;
     // Start is called before the first frame update
     void Start()
     {
@@ -35,7 +36,8 @@ public class GameSystem : MonoBehaviour
 
             if (floor.GetAmountOfPeople() >= floor.max_people_allowed)
             {
-                game_states.game_status = GameStatus.in_game_lost_paused;
+                money_timer += Time.deltaTime;
+                if (money_timer >= 1000) game_states.player_money_ingame -= 10;
             }
         }
     }

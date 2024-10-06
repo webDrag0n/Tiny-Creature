@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Elevator : MonoBehaviour
 {
+    public GameStates game_states;
     public Building building;
 
     public TMPro.TMP_Text capacity_display;
@@ -32,10 +33,10 @@ public class Elevator : MonoBehaviour
     {
         capacity_display = GetComponentInChildren<TMPro.TMP_Text>();
 
-        move_speed = 1.3f;
+        move_speed = game_states.move_speed;
         board_speed = 1;
         direction = 1;
-        max_capacity = 10;
+        max_capacity = game_states.capacity;
         people_amount_inside = 0;
         current_level = 0;
 
@@ -126,6 +127,7 @@ public class Elevator : MonoBehaviour
 
     void ReleasePeople()
     {
+        game_states.player_money_ingame += people_amount_inside * 100;
         people_amount_inside = 0;
         // play people get out animation
     }
