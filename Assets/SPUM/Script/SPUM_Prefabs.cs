@@ -56,13 +56,15 @@ public class SPUM_Prefabs : MonoBehaviour
         {
             case "idle":
                 _anim.SetBool("Move",false);
-            break;
+                break;
 
             case "run":
                 _anim.SetBool("Move",true);
-            break;
+                break;
 
-            
-        }
+            case "attack":
+                _anim.SetTrigger("Attack");
+                break;
+        }   
     }
 }

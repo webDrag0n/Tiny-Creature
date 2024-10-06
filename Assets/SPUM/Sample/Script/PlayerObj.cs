@@ -56,11 +56,15 @@ public class PlayerObj : MonoBehaviour
         switch(_currentState)
         {
             case PlayerState.idle:
-            break;
+                break;
 
             case PlayerState.run:
-            DoMove();
-            break;
+                DoMove();
+                break;
+            case PlayerState.attack:
+                break;
+            case PlayerState.death:
+                break;
         }
 
 

@@ -2,17 +2,48 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UIElements;
+using static PlayerObj;
+using static UnityEngine.CullingGroup;
+
+public class PeopleEvent : UnityEvent<BasePeople.PeopleState>
+{
+
+}
 
 public class BasePeople: MonoBehaviour
 {
+    public enum PeopleState
+    {
+        idle,
+        run,
+        attack,
+        death,
+    }
+    private PeopleState _currentState;
+    private PeopleEvent _stateChanged = new PeopleEvent();
+
+    public PeopleState CurrentState
+    {
+        get => _currentState;
+        set
+        {
+            _stateChanged.Invoke(value);
+            _currentState = value;
+        }
+    }
+
     public int apperance;
-    public Mesh[] modelMeshes;
     public Vector2 target_pos;
-    
+    protected SPUM_Prefabs[] prefab_list;
+    public SPUM_Prefabs _prefabs;
+
+
     public virtual void Start()
     {
         target_pos = transform.position;
+        
     }
 
     // Update is called once per frame
@@ -23,8 +54,8 @@ public class BasePeople: MonoBehaviour
 
     public virtual void UpdateModel()
     {
-        MeshFilter meshFilter = GetComponent<MeshFilter>();
-        meshFilter.mesh = modelMeshes[apperance];
+        prefab_list = Resources.LoadAll<SPUM_Prefabs>("SPUM/Prefabs");
+
     }
 }
 
@@ -44,6 +75,7 @@ public class People : BasePeople
     {
         base.Start();
         apperance = UnityEngine.Random.Range(0, Enum.GetValues(typeof(PeopleAppearance)).Length);
+        UpdateModel();
     }
 
     public override void LateUpdate()
@@ -54,6 +86,9 @@ public class People : BasePeople
     public override void UpdateModel()
     {
         base.UpdateModel();
+        _prefabs = prefab_list[apperance];
+        Debug.Log("prefab_list length: " + prefab_list.Length);
+        Debug.Log("apperance: " + apperance);
     }
 }
 
@@ -71,6 +106,7 @@ public class Boss : BasePeople
     {
         base.Start();
         apperance = UnityEngine.Random.Range(0, Enum.GetValues(typeof(BossAppearance)).Length);
+        UpdateModel();
     }
     public override void LateUpdate()
     {
@@ -79,5 +115,8 @@ public class Boss : BasePeople
     public override void UpdateModel()
     {
         base.UpdateModel();
+        _prefabs = prefab_list[apperance];
+        Debug.Log("prefab_list length: " + prefab_list.Length);
+        Debug.Log("apperance: " + apperance);
     }
 }
