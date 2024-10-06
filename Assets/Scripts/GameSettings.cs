@@ -15,6 +15,7 @@ public class GameSettings : ScriptableObject
     public int init_player_life;
 
     public float game_time_limit;
+    public bool is_two_player;
 
     public KeyCode control_elevator_up = KeyCode.W;
     public KeyCode control_elevator_down = KeyCode.S;

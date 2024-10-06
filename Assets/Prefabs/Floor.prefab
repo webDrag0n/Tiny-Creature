@@ -28,8 +28,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 4, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.08, y: 0.08, z: 0.08}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5ae240d86ac9141b69ec138b85c183f3, type: 3}
   m_Color: {r: 1, g: 0.601208, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -97,7 +97,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f784fcb2a91b1401a9b20088a721ec11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  people_prefab: {fileID: 1494198091744348851, guid: d2afc6d8acc8f439a827e62e8707189b, type: 3}
+  is_ground_floor: 0
+  people_prefab: {fileID: 6237672186105902862, guid: 2e379de55d3d14298bd7b29abb9ac56e, type: 3}
   queue: []
+  max_people_allowed: 10
+  people_interval: 0
   speed_generate_people: 0
   timer: 0
+  floor_index: 0

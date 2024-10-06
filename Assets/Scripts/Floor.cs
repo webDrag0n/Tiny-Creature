@@ -15,9 +15,9 @@ public class Floor : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        people_interval = 0.4f;
+        people_interval = 0.8f;
         speed_generate_people = Random.Range(0.1f, 0.3f);
-        max_people_allowed = 8;
+        max_people_allowed = 6;
     }
 
     // Update is called once per frame
@@ -44,7 +44,8 @@ public class Floor : MonoBehaviour
     {
         for (int i = 0; i < queue.Count; i++)
         {
-            queue[i].GetComponent<People>().target_pos = queue[i].GetComponent<People>().target_pos - new Vector2(people_interval, 0);
+            queue[i].GetComponent<People>().target_pos = queue[i].GetComponent<People>().target_pos
+                - new Vector2(people_interval - Random.Range(-0.05f, 0.05f), 0);
         }
     }
 
@@ -57,7 +58,14 @@ public class Floor : MonoBehaviour
 
     public void EnQueue()
     {
-        GameObject new_people = Instantiate(people_prefab, (Vector2)transform.position + new Vector2(-1.3f + queue.Count * people_interval, 0), Quaternion.identity, transform);
+        GameObject new_people = Instantiate(
+            people_prefab,
+            (Vector2)transform.position + new Vector2(
+                // x
+                -2f + queue.Count * people_interval + Random.Range(-0.1f, 0.1f),
+                // y
+                -0.4f + Random.Range(-0.1f, 0.1f)),
+            Quaternion.identity, transform);
         queue.Add(new_people);
     }
 }
