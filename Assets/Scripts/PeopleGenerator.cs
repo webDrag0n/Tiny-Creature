@@ -32,6 +32,7 @@ public class PeopleGenerator : MonoBehaviour
 
     public float RandomGenerateTime(LevelSetting.GenerateMethod method, float lambda)
     {
+        Debug.Log("RandomGenerateTime");
         float next_time = 0;
         switch (method)
         {

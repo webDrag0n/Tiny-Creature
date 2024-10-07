@@ -106,6 +106,7 @@ public class Floor : MonoBehaviour
         //    Quaternion.identity,
         //    transform
         //);
+        Debug.Log("EnQueue: " + people_level);
         GameObject new_people = null;
         if (people_level == People.PeopleLevel.NORMAL)
             new_people = people_generators.NormalGenerator.Generate(new_pos, Quaternion.identity, transform, floor_color);
