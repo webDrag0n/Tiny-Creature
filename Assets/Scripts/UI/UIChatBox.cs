@@ -14,6 +14,9 @@ public class UIChatBox : MonoBehaviour
 
     private Queue<UIChatBoxLine> chat_box_lines;
     private float timer;
+
+    // Amount of messages currently shown,
+    // Need to keep < 4 since the screen height is limited
     private int counter;
     // Start is called before the first frame update
     void Start()
@@ -37,6 +40,7 @@ public class UIChatBox : MonoBehaviour
                 // Destroy oldest message
                 UIChatBoxLine oldest_line = chat_box_lines.Dequeue();
                 Destroy(oldest_line.gameObject);
+                // Reduce showed message amount counter
                 counter--;
                 // Move other message up one by one
                 foreach (UIChatBoxLine line in chat_box_lines)

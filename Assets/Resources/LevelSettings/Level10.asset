@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0157e143c3e03264b9ded228393c1eee, type: 3}
+  m_Name: Level10
+  m_EditorClassIdentifier: 
+  level_index: 0
+  num_level: 3
+  time_limit: 100
+  generate_speed: 1
+  level_color: 000000000000000000000000
+  num_of_high_priority: -1
+  num_of_boss: 0
+  lambda_common: 0.1
+  lambda_high_priority: 0.1
+  lambda_boss: 0.1
+  generate_method_common: 1
+  generate_method_high_priority: 1
+  generate_method_boss: 2

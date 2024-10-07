@@ -31,7 +31,7 @@ public class Elevator : MonoBehaviour
     public Vector2 target_pos;
 
     // 0 or 1
-    private int elevator_id;
+    public int elevator_id;
 
     // Start is called before the first frame update
     private void Start()
@@ -156,7 +156,41 @@ public class Elevator : MonoBehaviour
             elevator_id_passengers[0] = game_states.elevator1_passengers;
             elevator_id_passengers[1] = game_states.elevator2_passengers;
 
-            int new_passenger_type = Random.Range(1, 8);
+            // convert the PeopleLevel & PeopleColor to 1-7 coding
+            // Different types of people has different values
+            // 0: empty, 1: normal, 2: blue people, 3: yellow people
+            //           4: N High, 5: B High value,6: Y High value
+            //           7: Boss
+            int base_code = 0;
+            People target_passenger = building.floors[_floor].Dequeue();
+
+            switch (target_passenger.color)
+            {
+                case BasePeople.PeopleColor.NORMAL:
+                    base_code = 1;
+                    break;
+                case BasePeople.PeopleColor.BLUE:
+                    base_code = 2;
+                    break;
+                case BasePeople.PeopleColor.YELLOW:
+                    base_code = 3;
+                    break;
+            }
+
+            switch (target_passenger.level)
+            {
+                case BasePeople.PeopleLevel.NORMAL:
+                    break;
+                case BasePeople.PeopleLevel.HIGH_PRIORITY:
+                    base_code += 3;
+                    break;
+                case BasePeople.PeopleLevel.BOSS:
+                    base_code = 7;
+                    break;
+            }
+
+            //int new_passenger_type = Random.Range(1, 8);
+            int new_passenger_type = base_code;
 
             // Check if there is yellow people if the current one is blue
             if (new_passenger_type == 2 || new_passenger_type == 5)
@@ -201,7 +235,6 @@ public class Elevator : MonoBehaviour
                 }
             }
 
-            building.floors[_floor].Dequeue();
             people_amount_inside += 1;
         }
     }

@@ -36,6 +36,7 @@ public class BuildingGenerator : MonoBehaviour
         // Generate elevator
         GameObject elevator = Instantiate(elevator_prefab, ground_base + new Vector2(-3.5f, 0), Quaternion.identity, building_gameObject.transform);
         elevator.GetComponent<Elevator>().building = building;
+        elevator.GetComponent<Elevator>().elevator_id = 0;
         elevator.GetComponent<Elevator>().move_speed = game_settings.init_elevator_speed;
         elevator.GetComponent<Elevator>().max_capacity = game_settings.init_elevator_max_capacity;
         elevator.GetComponent<ElevatorController>().control_up = game_settings.control_elevator_up;
@@ -47,6 +48,7 @@ public class BuildingGenerator : MonoBehaviour
             // Generate second elevator
             GameObject elevator2 = Instantiate(elevator_prefab, ground_base + new Vector2(-4.5f, 0), Quaternion.identity, building_gameObject.transform);
             elevator2.GetComponent<Elevator>().building = building;
+            elevator.GetComponent<Elevator>().elevator_id = 1;
             elevator2.GetComponent<Elevator>().move_speed = game_settings.init_elevator_speed;
             elevator2.GetComponent<Elevator>().max_capacity = game_settings.init_elevator_max_capacity;
             elevator2.GetComponent<ElevatorController>().control_up = game_settings.control_elevator2_up;

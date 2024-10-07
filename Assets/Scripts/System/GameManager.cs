@@ -75,6 +75,7 @@ public class GameManager : MonoBehaviour
     public void NextLevel()
     {
         game_states.building_levels++;
+        game_states.current_game_level++;
         game_states.timer = 0;
         game_states.player_life = 3;
         RestartGame();
@@ -98,6 +99,16 @@ public class GameManager : MonoBehaviour
         LoadGame();
     }
 
+    public void NewGame2P()
+    {
+        game_states.Load(game_states_default);
+        // Directly go to last level
+        game_states.current_game_level = 12;
+        game_states.capacity = 10;
+        game_states.move_speed = 400;
+        LoadGame();
+    }
+
     public void LoadGame()
     {
         game_states.game_status = GameStatus.in_game_paused;
@@ -109,14 +120,38 @@ public class GameManager : MonoBehaviour
         // Load game scene
         SceneManager.LoadSceneAsync("Game", LoadSceneMode.Additive);
 
-        // Generate Map
+        // Activate auto return
+        if (game_states.current_game_level >= 5)
+        {
+            game_states.is_auto_return = true;
+        }
+        else
+        {
+            game_states.is_auto_return = false;
+        }
 
+        // Activate duo elevator on level 6
+        if (game_states.current_game_level >= 6)
+        {
+            game_states.is_second_elevator_activated = true;
+        }
+        else
+        {
+            game_states.is_second_elevator_activated = false;
+        }
+        // Sync building level with current_game_level +3
+        if (game_states.building_levels != game_states.current_game_level + 3)
+        {
+            Debug.LogWarning("building_levels & current_game_level out of sync!");
+            game_states.building_levels = game_states.current_game_level + 3;
+        }
 
         if (game_states.is_intro_passed)
         {
             ResumeGame();
         }
     }
+
 
     public void ResumeGame()
     {

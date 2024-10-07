@@ -27,15 +27,41 @@ public class BasePeople: MonoBehaviour
     public PeopleColor color;
     public Vector2 target_pos;
 
+    GameObject high_value_sign;
+    GameObject boss_sign;
+
     public virtual void Start()
     {
         target_pos = transform.position;
+        high_value_sign = Instantiate(
+            Resources.Load<GameObject>("Icon/HighValueSign"),
+            (Vector2)transform.position + new Vector2(0, 1),
+            Quaternion.identity,
+            transform);
+
+        boss_sign = Instantiate(
+            Resources.Load<GameObject>("Icon/BossSign"),
+            (Vector2)transform.position + new Vector2(0, 1),
+            Quaternion.identity,
+            transform);
     }
 
     // Update is called once per frame
     public virtual void LateUpdate()
     {
         transform.position = Vector2.Lerp(transform.position, target_pos, 10 * Time.deltaTime);
+
+        // High priority people show ! sign on head
+        high_value_sign.SetActive(level == PeopleLevel.HIGH_PRIORITY);
+        boss_sign.SetActive(level == PeopleLevel.BOSS);
+    }
+
+    public virtual void SetHighValue(bool _is_high_value)
+    {
+        if (_is_high_value)
+        {
+            
+        }
     }
 }
 

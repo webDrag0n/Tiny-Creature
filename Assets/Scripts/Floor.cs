@@ -11,6 +11,7 @@ public class Floor : MonoBehaviour
 
     public bool is_ground_floor;
     public GameObject people_prefab;
+    public SpriteRenderer floor_sprite_renderer;
     public List<GameObject> queue;
     public int max_people_allowed;
     public float people_interval;
@@ -42,6 +43,7 @@ public class Floor : MonoBehaviour
         people_generators.NormalGenerator = GameObject.Find("NormalGenerator").GetComponent<PeopleGenerator>();
         people_generators.HighPriorityGenerator = GameObject.Find("HighPriorityGenerator").GetComponent<PeopleGenerator>();
         people_generators.BossGenerator = GameObject.Find("BossGenerator").GetComponent<PeopleGenerator>();
+
     }
 
     // Update is called once per frame
@@ -89,6 +91,12 @@ public class Floor : MonoBehaviour
         }
     }
 
+    public void SetSprite(Sprite floor_sprite)
+    {
+        // Set floor texture based on floor level
+        floor_sprite_renderer.sprite = floor_sprite;
+    }
+
     public int GetAmountOfPeople()
     {
         return queue.Count;
@@ -103,11 +111,13 @@ public class Floor : MonoBehaviour
         }
     }
 
-    public void Dequeue()
+    public People Dequeue()
     {
+        People people_copy = queue[0].GetComponent<People>();
         Destroy(queue[0]);
         queue.RemoveAt(0);
         QueueMoveForward();
+        return people_copy;
     }
 
     public void EnQueue(People.PeopleLevel people_level)
@@ -130,7 +140,7 @@ public class Floor : MonoBehaviour
         else
             new_people = people_generators.BossGenerator.Generate(new_pos, Quaternion.identity, transform, floor_color);
         
-        Debug.Log("EnQueue --- new_people: " + new_people.IsUnityNull());
+        //Debug.Log("EnQueue --- new_people: " + new_people.IsUnityNull());
         queue.Add(new_people);
     }
 }

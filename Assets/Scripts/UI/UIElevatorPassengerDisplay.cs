@@ -48,7 +48,7 @@ public class UIElevatorPassengerDisplay : MonoBehaviour
                 //           7: Boss
                 case 0:
                     // empty
-                    passenger_grids1[i].color = Color.black;
+                    passenger_grids1[i].color = Color.gray;
                     break;
                 case 1:
                     // normal
@@ -82,7 +82,7 @@ public class UIElevatorPassengerDisplay : MonoBehaviour
             {
                 case 0:
                     // empty
-                    passenger_grids2[i].color = Color.black;
+                    passenger_grids2[i].color = Color.gray;
                     break;
                 case 1:
                     // normal

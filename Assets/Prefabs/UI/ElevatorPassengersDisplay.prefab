@@ -162,7 +162,7 @@ GameObject:
   - component: {fileID: 6084832742937750626}
   - component: {fileID: 854287805301988198}
   m_Layer: 5
-  m_Name: Elevator1 BG
+  m_Name: Elevator2 BG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1530,12 +1530,12 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6507511604669876280}
-  - {fileID: 6582024092619363101}
   - {fileID: 8763674118596491378}
+  - {fileID: 6582024092619363101}
   - {fileID: 4213630865264021976}
   - {fileID: 8336827593553525991}
-  - {fileID: 6228457671424522022}
   - {fileID: 5393083961535514821}
+  - {fileID: 6228457671424522022}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
@@ -1556,10 +1556,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   game_states: {fileID: 11400000, guid: e1a8e6e80ad81463181bbdc3bbc5dae0, type: 2}
-  passenger_display1: {fileID: 8645032517574359137}
-  passenger_display2: {fileID: 7774163605271970716}
-  elevator1_door_open_bg: {fileID: 1245343377819418696}
-  elevator2_door_open_bg: {fileID: 7896951162545874697}
+  passenger_display1: {fileID: 7774163605271970716}
+  passenger_display2: {fileID: 8645032517574359137}
+  elevator1_door_open_bg: {fileID: 7896951162545874697}
+  elevator2_door_open_bg: {fileID: 1245343377819418696}
   passenger_grids1:
   - {fileID: 3312964353975116779}
   - {fileID: 3013036993475239668}
@@ -1668,7 +1668,7 @@ GameObject:
   - component: {fileID: 5393083961535514821}
   - component: {fileID: 1125618650453658015}
   m_Layer: 5
-  m_Name: Elevator2 Passengers
+  m_Name: Elevator1 Passengers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1723,7 +1723,7 @@ GameObject:
   - component: {fileID: 2244275721232164834}
   - component: {fileID: 4114897762636466959}
   m_Layer: 5
-  m_Name: Elevator2 BG
+  m_Name: Elevator1 BG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1872,7 +1872,7 @@ GameObject:
   - component: {fileID: 6228457671424522022}
   - component: {fileID: 6986776935549926507}
   m_Layer: 5
-  m_Name: Elevator1 Passengers
+  m_Name: Elevator2 Passengers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

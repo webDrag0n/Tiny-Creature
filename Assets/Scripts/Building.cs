@@ -11,7 +11,9 @@ public class Building : MonoBehaviour
     public List<Floor> floors;
     public GameObject floor_prefab;
     public GameObject roof_prefab;
+    public Sprite[] floor_textures;
     public float floor_interval = 1.05f;
+
 
     public void Init(int _levels, Vector2 _ground_base, int level_id)
     {
@@ -21,10 +23,12 @@ public class Building : MonoBehaviour
 
         if (levels <= 8)
         {
+            // above ground floors
             ground_floor_level = 0;
         }
         else if (levels > 8)
         {
+            // underground floors
             ground_floor_level = levels - 8;
         }
 
@@ -33,6 +37,17 @@ public class Building : MonoBehaviour
             GameObject new_floor = Instantiate(floor_prefab, ground_base + new Vector2(0, 1.05f * i + 0.09f), Quaternion.identity, transform);
             new_floor.GetComponent<Floor>().floor_index = floors.Count;
             new_floor.GetComponent<Floor>().level_setting = Resources.Load<LevelSetting>("LevelSettings/Level" + level_id);
+
+            if (i <= 7)
+            {
+                // Above ground floors level 0-8 -> texture 5-13
+                new_floor.GetComponent<Floor>().SetSprite(floor_textures[i + 5]);
+            }
+            else if (i > 7)
+            {
+                // underground floors level 8-12 -> texture 0-5
+                new_floor.GetComponent<Floor>().SetSprite(floor_textures[i - 7]);
+            }
 
             if (i == ground_floor_level)
             {
