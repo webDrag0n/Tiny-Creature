@@ -23,7 +23,7 @@ public class GameSystem : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        Camera.main.orthographicSize = 3 + game_states.building_levels * 0.5f;
+        Camera.main.orthographicSize = 4 + game_states.building_levels * 0.5f;
         Camera.main.transform.position = new Vector3(3, (game_states.building_levels - 1) * 0.1f, -10);
 
         game_states.timer += Time.deltaTime;

@@ -21,15 +21,15 @@ public class Building : MonoBehaviour
         ground_base = _ground_base;
         floor_interval = 1.05f;
 
-        if (levels <= 8)
+        if (levels <= 7)
         {
             // above ground floors
             ground_floor_level = 0;
         }
-        else if (levels > 8)
+        else if (levels > 7)
         {
             // underground floors
-            ground_floor_level = levels - 8;
+            ground_floor_level = levels - 7;
         }
 
         for (int i = 0; i < _levels; i++)
@@ -38,26 +38,30 @@ public class Building : MonoBehaviour
             new_floor.GetComponent<Floor>().floor_index = floors.Count;
             new_floor.GetComponent<Floor>().level_setting = Resources.Load<LevelSetting>("LevelSettings/Level" + level_id);
 
-            if (i <= 7)
+            if (levels <= 7)
             {
                 // Above ground floors level 0-8 -> texture 5-13
                 new_floor.GetComponent<Floor>().SetSprite(floor_textures[i + 5]);
-                // Activate building above background on ground floor
-                new_floor.GetComponent<Floor>().scene_above_bg.SetActive(i == 0);
             }
-            else if (i > 7)
+            else if (levels > 7)
             {
+
                 // underground floors level 8-12 -> texture 0-5
-                new_floor.GetComponent<Floor>().SetSprite(floor_textures[i - 7]);
+                new_floor.GetComponent<Floor>().SetSprite(floor_textures[i + 5 - ground_floor_level]);
                 // Activate building above background on -1 (i=8) floor
 
-                new_floor.GetComponent<Floor>().scene_below_bg.SetActive(i == 8);
             }
 
             if (i == ground_floor_level)
             {
                 // Set ground floor checkbox property and color
                 new_floor.GetComponent<Floor>().is_ground_floor = true;
+
+                new_floor.GetComponent<Floor>().scene_above_bg.SetActive(true);
+                if (i > 0)
+                {
+                    new_floor.GetComponent<Floor>().scene_below_bg.SetActive(true);
+                }
                 new_floor.GetComponentInChildren<SpriteRenderer>().color = ground_floor_color;
             }
             floors.Add(new_floor.GetComponent<Floor>());

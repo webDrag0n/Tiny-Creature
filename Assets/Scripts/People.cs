@@ -27,8 +27,8 @@ public class BasePeople: MonoBehaviour
     public PeopleColor color;
     public Vector2 target_pos;
 
-    GameObject high_value_sign;
-    GameObject boss_sign;
+    public GameObject high_value_sign;
+    public GameObject boss_sign;
 
     public virtual void Start()
     {

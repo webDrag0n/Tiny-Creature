@@ -73,7 +73,7 @@ public class PeopleGenerator : MonoBehaviour
         return;
     }
 
-    public GameObject Generate(Vector2 position, Quaternion quad, UnityEngine.Transform transform, People.PeopleColor people_color)
+    public GameObject Generate(Vector2 position, Quaternion quad, UnityEngine.Transform transform, People.PeopleColor people_color, People.PeopleLevel people_level)
     {
         if (generate_people_limit != 0)
             if (generate_people_count >= generate_people_limit)
@@ -88,6 +88,7 @@ public class PeopleGenerator : MonoBehaviour
         );
         //Debug.Log("PeopleColor: " + people_color);
         generated_gameobj.GetComponent<People>().color = people_color;
+        generated_gameobj.GetComponent<People>().level = people_level;
         //Debug.Log("BreakPoint");
         return generated_gameobj;
     }

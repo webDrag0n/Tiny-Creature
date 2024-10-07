@@ -138,11 +138,11 @@ public class Floor : MonoBehaviour
         
         GameObject new_people = null;
         if (people_level == People.PeopleLevel.NORMAL)
-            new_people = people_generators.NormalGenerator.Generate(new_pos, Quaternion.identity, transform, floor_color);
+            new_people = people_generators.NormalGenerator.Generate(new_pos, Quaternion.identity, transform, floor_color, people_level);
         else if (people_level == People.PeopleLevel.HIGH_PRIORITY)
-            new_people = people_generators.HighPriorityGenerator.Generate(new_pos, Quaternion.identity, transform, floor_color);
+            new_people = people_generators.HighPriorityGenerator.Generate(new_pos, Quaternion.identity, transform, floor_color, people_level);
         else
-            new_people = people_generators.BossGenerator.Generate(new_pos, Quaternion.identity, transform, floor_color);
+            new_people = people_generators.BossGenerator.Generate(new_pos, Quaternion.identity, transform, floor_color, people_level);
         
         //Debug.Log("EnQueue --- new_people: " + new_people.IsUnityNull());
         queue.Add(new_people);
