@@ -23,6 +23,8 @@ public class BasePeople: MonoBehaviour
         YELLOW,
     }
 
+    public PeopleLevel level;
+    public PeopleColor color;
     public Vector2 target_pos;
 
     public virtual void Start()

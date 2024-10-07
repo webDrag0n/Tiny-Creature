@@ -7,10 +7,9 @@ public class PeopleGenerator : MonoBehaviour
 {
 
 
-    public string prefab_path;
-
-    //public GameObject people_prefab;
+    public People.PeopleLevel people_level;
     public GameObject[] people_prefab_list;
+    
 
     public float game_time_limit;
     public int generate_people_limit;
@@ -53,6 +52,13 @@ public class PeopleGenerator : MonoBehaviour
 
     internal void Start()
     {
+        string prefab_path = "Prefabs/SPUM";
+        if (people_level == People.PeopleLevel.BOSS) 
+            prefab_path += "/alpha";
+        else if (people_level == People.PeopleLevel.HIGH_PRIORITY)
+            prefab_path += "/beta";
+        else
+            prefab_path += "/omega";
         people_prefab_list = Resources.LoadAll<GameObject>(prefab_path);
         Debug.Log("people_prefab_list length: " + people_prefab_list.Length);
         return;
@@ -64,7 +70,7 @@ public class PeopleGenerator : MonoBehaviour
         return;
     }
 
-    public GameObject Generate(Vector2 position, Quaternion quad, UnityEngine.Transform transform, Floor.ColorFlag color_flag)
+    public GameObject Generate(Vector2 position, Quaternion quad, UnityEngine.Transform transform, People.PeopleColor people_color)
     {
         if (generate_people_limit != 0)
             if (generate_people_count >= generate_people_limit)
@@ -77,6 +83,7 @@ public class PeopleGenerator : MonoBehaviour
             quad,
             transform
         );
+        gameObject.GetComponent<People>().color = people_color;
         return genrated_gameobj;
     }
 }
