@@ -13,7 +13,7 @@ public class Building : MonoBehaviour
     public GameObject roof_prefab;
     public float floor_interval = 1.05f;
 
-    public void Init(int _levels, Vector2 _ground_base)
+    public void Init(int _levels, Vector2 _ground_base, int level_id)
     {
         levels = _levels;
         ground_base = _ground_base;
@@ -32,6 +32,7 @@ public class Building : MonoBehaviour
         {
             GameObject new_floor = Instantiate(floor_prefab, ground_base + new Vector2(0, 1.05f * i + 0.09f), Quaternion.identity, transform);
             new_floor.GetComponent<Floor>().floor_index = floors.Count;
+            new_floor.GetComponent<Floor>().level_setting = Resources.Load<LevelSetting>("LevelSettings/Level" + level_id);
 
             if (i == ground_floor_level)
             {

@@ -48,7 +48,6 @@ public class GameManager : MonoBehaviour
             // Deduct $300 to build a new floor
             game_states.player_money_total += game_states.player_money_ingame;
             game_states.player_money_ingame = 0;
-            game_states.player_money_total -= 300;
             OpenPanel("game_won_pause");
             PauseGame();
         }
@@ -109,6 +108,9 @@ public class GameManager : MonoBehaviour
 
         // Load game scene
         SceneManager.LoadSceneAsync("Game", LoadSceneMode.Additive);
+
+        // Generate Map
+
 
         if (game_states.is_intro_passed)
         {

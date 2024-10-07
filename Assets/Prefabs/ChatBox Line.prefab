@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2321177451330134055}
   - component: {fileID: 7202799830434013458}
   - component: {fileID: 3617003033352134561}
+  - component: {fileID: 3764550464196015022}
   m_Layer: 5
   m_Name: ChatBox Line
   m_TagString: Untagged
@@ -77,6 +78,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 0.4
+--- !u!114 &3764550464196015022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 846096370629246417}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec786d3ef6ad64ed18c18ac8516aee3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target_pos: {x: 0, y: 0}
 --- !u!1 &1308858210745599805
 GameObject:
   m_ObjectHideFlags: 0
