@@ -42,11 +42,16 @@ public class Building : MonoBehaviour
             {
                 // Above ground floors level 0-8 -> texture 5-13
                 new_floor.GetComponent<Floor>().SetSprite(floor_textures[i + 5]);
+                // Activate building above background on ground floor
+                new_floor.GetComponent<Floor>().scene_above_bg.SetActive(i == 0);
             }
             else if (i > 7)
             {
                 // underground floors level 8-12 -> texture 0-5
                 new_floor.GetComponent<Floor>().SetSprite(floor_textures[i - 7]);
+                // Activate building above background on -1 (i=8) floor
+
+                new_floor.GetComponent<Floor>().scene_below_bg.SetActive(i == 8);
             }
 
             if (i == ground_floor_level)

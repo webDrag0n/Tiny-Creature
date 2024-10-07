@@ -15,12 +15,12 @@ MonoBehaviour:
   level_index: 0
   num_level: 3
   time_limit: 100
-  generate_speed: 1
+  generate_speed: 0.7
   level_color: 000000000000000000000000
-  num_of_high_priority: -1
+  num_of_high_priority: 100
   num_of_boss: 0
   lambda_common: 0.1
-  lambda_high_priority: 0.1
+  lambda_high_priority: 1
   lambda_boss: 0.1
   generate_method_common: 1
   generate_method_high_priority: 1

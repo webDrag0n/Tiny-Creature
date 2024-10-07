@@ -9,6 +9,7 @@ public class MusicManager : MonoBehaviour
     public AudioSource main_menu_bgm;
     public AudioSource game_day_bgm;
     public AudioSource game_night_bgm;
+    public AudioSource game_won_bgm;
     // Update is called once per frame
     void Update()
     {
@@ -17,20 +18,29 @@ public class MusicManager : MonoBehaviour
             main_menu_bgm.volume = 1;
             game_day_bgm.volume = 0;
             game_night_bgm.volume = 0;
+            game_won_bgm.volume = 0;
         }
         if (game_states.game_status == GameStatus.in_game_playing)
         {
             main_menu_bgm.volume = 0;
             game_day_bgm.volume = 1;
             game_night_bgm.volume = 0;
+            game_won_bgm.volume = 0;
         }
-        if (game_states.game_status == GameStatus.in_game_won_paused
-            || game_states.game_status == GameStatus.in_game_lost_paused
+        if (game_states.game_status == GameStatus.in_game_lost_paused
             || game_states.game_status == GameStatus.in_game_paused)
         {
             main_menu_bgm.volume = 0;
             game_day_bgm.volume = 0;
             game_night_bgm.volume = 1;
+            game_won_bgm.volume = 0;
+        }
+        if (game_states.game_status == GameStatus.in_game_won_paused)
+        {
+            main_menu_bgm.volume = 0;
+            game_day_bgm.volume = 0;
+            game_night_bgm.volume = 0;
+            game_won_bgm.volume = 1;
         }
     }
 

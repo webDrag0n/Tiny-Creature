@@ -6,6 +6,7 @@ using UnityEngine.UIElements;
 
 public class UIChatBox : MonoBehaviour
 {
+    public GameStates game_states;
     public GameObject chat_box_line;
     public float message_time_interval;
     public TextAsset textFile;
@@ -22,7 +23,7 @@ public class UIChatBox : MonoBehaviour
     void Start()
     {
         ResetChatBox();
-        ReadScript(0);
+        ReadScript(game_states.current_game_level);
     }
 
     // Update is called once per frame
@@ -75,15 +76,33 @@ public class UIChatBox : MonoBehaviour
 
     void ReadScript(int level)
     {
-        textFile = Resources.Load<TextAsset>("ChatBoxDialogs/Dialog" + level);
-        string[] data = textFile.text.Split('\n');
-        foreach (string line in data)
+        string[] data;
+        try
         {
-            // Do Something with the input.
-            string[] name_text_pair = line.Split("|");
-            PushInMessage(name_text_pair[0], name_text_pair[1]);
-        }
+            // If corresponding dialog text found
+            textFile = Resources.Load<TextAsset>("ChatBoxDialogs/Dialog" + level);
+            data = textFile.text.Split('\n');
 
+            foreach (string line in data)
+            {
+                // Do Something with the input.
+                string[] name_text_pair = line.Split("|");
+                PushInMessage(name_text_pair[0], name_text_pair[1]);
+            }
+        }
+        catch
+        {
+            // Play default
+            textFile = Resources.Load<TextAsset>("ChatBoxDialogs/DialogDefault");
+            data = textFile.text.Split('\n');
+
+            foreach (string line in data)
+            {
+                // Do Something with the input.
+                string[] name_text_pair = line.Split("|");
+                PushInMessage(name_text_pair[0], name_text_pair[1]);
+            }
+        }
     }
 
     void PushInMessage(string name, string message)

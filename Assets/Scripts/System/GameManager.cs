@@ -56,6 +56,7 @@ public class GameManager : MonoBehaviour
         if (game_states.game_status == GameStatus.in_game_lost_paused)
         {
             game_states.player_money_total += game_states.player_money_ingame;
+            game_states.player_money_total += 100;
             game_states.player_money_ingame = 0;
             if (game_states.player_life == 0)
             {

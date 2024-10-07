@@ -56,13 +56,6 @@ public class BasePeople: MonoBehaviour
         boss_sign.SetActive(level == PeopleLevel.BOSS);
     }
 
-    public virtual void SetHighValue(bool _is_high_value)
-    {
-        if (_is_high_value)
-        {
-            
-        }
-    }
 }
 
 public class People : BasePeople

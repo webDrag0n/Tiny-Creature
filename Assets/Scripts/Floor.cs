@@ -22,6 +22,10 @@ public class Floor : MonoBehaviour
     public float timer_high_priority;
     protected float _set_timer_high_priority;
 
+    public GameObject floor_full_warning;
+    public GameObject scene_above_bg;
+    public GameObject scene_below_bg;
+
     public struct PeopleGenerators
     {
         public PeopleGenerator NormalGenerator;

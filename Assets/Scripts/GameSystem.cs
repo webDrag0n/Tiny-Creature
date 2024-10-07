@@ -23,7 +23,8 @@ public class GameSystem : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        Camera.main.orthographicSize = 4 + game_states.building_levels * 0.5f;
+        Camera.main.orthographicSize = 3 + game_states.building_levels * 0.5f;
+        Camera.main.transform.position = new Vector3(3, (game_states.building_levels - 1) * 0.1f, -10);
 
         game_states.timer += Time.deltaTime;
         if (game_states.game_status == GameStatus.in_game_playing && game_states.timer >= game_settings.game_time_limit)
@@ -55,17 +56,24 @@ public class GameSystem : MonoBehaviour
             {
                 // Penalty on money
                 money_timer += Time.deltaTime;
-                // Each second the floor is full will deduct 10
-                if (money_timer >= 1)
+                // Each 2 seconds the floor is full will deduct 5
+                if (money_timer >= 2)
                 {
                     money_timer = 0;
-                    game_states.player_money_ingame -= 10;
+                    game_states.player_money_ingame -= 5;
 
                     if (game_states.player_money_ingame + game_states.player_money_total < 0){
                         game_states.game_status = GameStatus.in_game_lost_paused;
                     }
                     // Flash red background on corresponding floor
                     // floor.GetComponentInChildren...
+                    floor.floor_full_warning.SetActive(true);
+                }
+
+                if (money_timer >= 0.5f)
+                {
+                    // Disable warning after 0.5s to achieve flashing effect
+                    floor.floor_full_warning.SetActive(false);
                 }
             }
         }
