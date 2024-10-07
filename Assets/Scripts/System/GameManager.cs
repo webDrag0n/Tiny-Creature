@@ -45,8 +45,10 @@ public class GameManager : MonoBehaviour
         // On game won
         if (game_states.game_status == GameStatus.in_game_won_paused)
         {
+            // Deduct $300 to build a new floor
             game_states.player_money_total += game_states.player_money_ingame;
             game_states.player_money_ingame = 0;
+            game_states.player_money_total -= 300;
             OpenPanel("game_won_pause");
             PauseGame();
         }

@@ -15,6 +15,6 @@ public class UIMoneyTotal : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        money_text.text = game_states.player_money_total.ToString();
+        money_text.text = (game_states.player_money_total + game_states.player_money_ingame).ToString();
     }
 }

@@ -27,8 +27,8 @@ public class GameSystem : MonoBehaviour
         game_states.timer += Time.deltaTime;
         if (game_states.game_status == GameStatus.in_game_playing && game_states.timer >= game_settings.game_time_limit)
         {
-            // If money reached required amount
-            if (game_states.player_money_ingame >= 300)
+            // If total money reached required amount (300) when time went out, level won
+            if (game_states.player_money_total + game_states.player_money_ingame >= 300)
             {
                 // Round won;
                 game_states.game_status = GameStatus.in_game_won_paused;
@@ -47,7 +47,15 @@ public class GameSystem : MonoBehaviour
             {
                 // Penalty on money
                 money_timer += Time.deltaTime;
-                if (money_timer >= 1000) game_states.player_money_ingame -= 10;
+                Debug.Log(money_timer);
+                // Each second the floor is full will deduct 10
+                if (money_timer >= 1)
+                {
+                    money_timer = 0;
+                    game_states.player_money_ingame -= 10;
+                    // Flash red background on corresponding floor
+                    // floor.GetComponentInChildren...
+                }
             }
         }
     }
