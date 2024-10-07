@@ -22,7 +22,7 @@ public class PeopleGenerator : MonoBehaviour
 
     private float _ExponentialSampler(float lambda)
     {
-        return -Mathf.Log(1 - Random.Range(0, 1)) / lambda;
+        return -Mathf.Log(1 - Random.Range(0, 1.0f)) / lambda;
     }
 
     private float _AfterHalfSampler(float lambda)
@@ -80,13 +80,15 @@ public class PeopleGenerator : MonoBehaviour
                 return null;
         generate_people_count++;
         int apperance = Random.Range(0, people_prefab_list.Length);
-        GameObject genrated_gameobj = Instantiate(
+        GameObject generated_gameobj = Instantiate(
             people_prefab_list[apperance],
             position,
             quad,
             transform
         );
-        gameObject.GetComponent<People>().color = people_color;
-        return genrated_gameobj;
+        //Debug.Log("PeopleColor: " + people_color);
+        generated_gameobj.GetComponent<People>().color = people_color;
+        //Debug.Log("BreakPoint");
+        return generated_gameobj;
     }
 }

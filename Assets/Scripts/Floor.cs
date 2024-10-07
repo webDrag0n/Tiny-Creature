@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Collections.LowLevel.Unsafe;
+using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 
@@ -56,25 +57,26 @@ public class Floor : MonoBehaviour
             //    timer = 0;
             //    EnQueue();
             //}
-            timer_normal += Time.fixedDeltaTime;
-            timer_high_priority += Time.fixedDeltaTime;
+            float delta_time = Time.fixedDeltaTime;
+            timer_normal += delta_time;
+            timer_high_priority += delta_time;
 
             // Set timer
             if (_set_timer_normal <= 0)
                 _set_timer_normal = people_generators.NormalGenerator.RandomGenerateTime(LevelSetting.GenerateMethod.EXPONENTIAL, level_setting.lambda_common);
 
-
-            if (timer_normal > 1 / _set_timer_normal && GetAmountOfPeople() < max_people_allowed)
+            if (timer_normal >  _set_timer_normal && GetAmountOfPeople() < max_people_allowed)
             {
                 timer_normal = 0;
                 EnQueue(People.PeopleLevel.NORMAL);
                 _set_timer_normal = people_generators.NormalGenerator.RandomGenerateTime(LevelSetting.GenerateMethod.EXPONENTIAL, level_setting.lambda_common);
             }
 
+
             if (_set_timer_high_priority <= 0)
                 _set_timer_high_priority = people_generators.HighPriorityGenerator.RandomGenerateTime(LevelSetting.GenerateMethod.EXPONENTIAL, level_setting.lambda_high_priority);
 
-            if (timer_high_priority > 1 / _set_timer_high_priority && GetAmountOfPeople() < max_people_allowed)
+            if (timer_high_priority > _set_timer_high_priority && GetAmountOfPeople() < max_people_allowed)
             {
                 timer_high_priority = 0;
                 EnQueue(People.PeopleLevel.HIGH_PRIORITY);
@@ -119,7 +121,7 @@ public class Floor : MonoBehaviour
         //    Quaternion.identity,
         //    transform
         //);
-        Debug.Log("EnQueue: " + people_level);
+        
         GameObject new_people = null;
         if (people_level == People.PeopleLevel.NORMAL)
             new_people = people_generators.NormalGenerator.Generate(new_pos, Quaternion.identity, transform, floor_color);
@@ -127,6 +129,8 @@ public class Floor : MonoBehaviour
             new_people = people_generators.HighPriorityGenerator.Generate(new_pos, Quaternion.identity, transform, floor_color);
         else
             new_people = people_generators.BossGenerator.Generate(new_pos, Quaternion.identity, transform, floor_color);
+        
+        Debug.Log("EnQueue --- new_people: " + new_people.IsUnityNull());
         queue.Add(new_people);
     }
 }
