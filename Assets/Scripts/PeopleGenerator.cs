@@ -61,6 +61,7 @@ public class PeopleGenerator : MonoBehaviour
         else
             prefab_path += "/omega";
         people_prefab_list = Resources.LoadAll<GameObject>(prefab_path);
+
         Debug.Log("people_prefab_list length: " + people_prefab_list.Length);
         return;
     }

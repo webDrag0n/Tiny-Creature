@@ -27,6 +27,9 @@ public class GameStates : ScriptableObject
     public bool is_second_elevator_activated;
 
     public int building_levels;
+    // Progress of game, from 0 to 9 for 10 levels, used to find the appropriate level setting
+    public int current_game_level;
+
     public int player_life;
     public int player_money_total;
     public int player_money_ingame;
@@ -80,6 +83,8 @@ public class GameStates : ScriptableObject
         is_second_elevator_activated = _game_state.is_second_elevator_activated;
 
         building_levels = _game_state.building_levels;
+        current_game_level = _game_state.current_game_level;
+
         player_life = _game_state.player_life;
         player_money_total = _game_state.player_money_total;
         player_money_ingame = _game_state.player_money_ingame;

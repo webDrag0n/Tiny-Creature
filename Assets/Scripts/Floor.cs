@@ -38,6 +38,9 @@ public class Floor : MonoBehaviour
         people_interval = 0.8f;
         speed_generate_people = Random.Range(0.1f, 0.3f);
         max_people_allowed = 6;
+        people_generators.NormalGenerator = GameObject.Find("NormalGenerator").GetComponent<PeopleGenerator>();
+        people_generators.HighPriorityGenerator = GameObject.Find("HighPriorityGenerator").GetComponent<PeopleGenerator>();
+        people_generators.BossGenerator = GameObject.Find("BossGenerator").GetComponent<PeopleGenerator>();
     }
 
     // Update is called once per frame
@@ -45,6 +48,8 @@ public class Floor : MonoBehaviour
     {
         if (!is_ground_floor)
         {
+            // Not Ground floor
+
             //timer += Time.fixedDeltaTime;
             //if (timer > 1 / speed_generate_people)
             //{
@@ -54,8 +59,11 @@ public class Floor : MonoBehaviour
             timer_normal += Time.fixedDeltaTime;
             timer_high_priority += Time.fixedDeltaTime;
 
+            // Set timer
             if (_set_timer_normal <= 0)
                 _set_timer_normal = people_generators.NormalGenerator.RandomGenerateTime(LevelSetting.GenerateMethod.EXPONENTIAL, level_setting.lambda_common);
+
+
             if (timer_normal > 1 / _set_timer_normal && GetAmountOfPeople() < max_people_allowed)
             {
                 timer_normal = 0;
@@ -65,12 +73,17 @@ public class Floor : MonoBehaviour
 
             if (_set_timer_high_priority <= 0)
                 _set_timer_high_priority = people_generators.HighPriorityGenerator.RandomGenerateTime(LevelSetting.GenerateMethod.EXPONENTIAL, level_setting.lambda_high_priority);
+
             if (timer_high_priority > 1 / _set_timer_high_priority && GetAmountOfPeople() < max_people_allowed)
             {
                 timer_high_priority = 0;
                 EnQueue(People.PeopleLevel.HIGH_PRIORITY);
                 _set_timer_high_priority = people_generators.HighPriorityGenerator.RandomGenerateTime(LevelSetting.GenerateMethod.EXPONENTIAL, level_setting.lambda_high_priority);
             }
+        }
+        else
+        {
+            // Ground floor
         }
     }
 

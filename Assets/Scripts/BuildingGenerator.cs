@@ -28,7 +28,9 @@ public class BuildingGenerator : MonoBehaviour
         Building building = building_gameObject.GetComponent<Building>();
 
         // Generate floors inside building
-        building.Init(game_settings.init_building_levels, ground_base);
+        // current_game_level used to tell the floors in the generated building how to behave,
+        // such as people spawn, flash, etc
+        building.Init(game_settings.init_building_levels, ground_base, game_states.current_game_level);
 
 
         // Generate elevator
