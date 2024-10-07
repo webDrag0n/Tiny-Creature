@@ -32,7 +32,7 @@ public class PeopleGenerator : MonoBehaviour
 
     public float RandomGenerateTime(LevelSetting.GenerateMethod method, float lambda)
     {
-        Debug.Log("RandomGenerateTime");
+        
         float next_time = 0;
         switch (method)
         {
@@ -48,6 +48,7 @@ public class PeopleGenerator : MonoBehaviour
                 next_time = _AfterHalfSampler(lambda);
                 break;
         }
+        Debug.Log("RandomGenerateTime --- Lambda: " + lambda + " next_time:" + next_time);
         return next_time;
     }
 
