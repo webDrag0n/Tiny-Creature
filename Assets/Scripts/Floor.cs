@@ -1,24 +1,61 @@
+using System.Collections;
 using System.Collections.Generic;
+using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 
-public class PeopleGenerator: MonoBehaviour
+public class PeopleGenerator : MonoBehaviour
 {
-    private enum GeneratorFlag
+
+
+    public string prefab_path;
+
+    //public GameObject people_prefab;
+    public GameObject[] people_prefab_list;
+
+    public float game_time_limit;
+    public int generate_people_limit;
+    protected int generate_people_count;
+
+    private float _UniformSampler(float lambda)
     {
-        NORMAL,
-        YELLOW,
-        BLUE,
+        return Random.Range(0, 1 / lambda);
     }
 
-    public GameObject people_prefab;
+    private float _ExponentialSampler(float lambda)
+    {
+        return -Mathf.Log(1 - Random.Range(0, 1)) / lambda;
+    }
 
-    public float lambda_common;
-    public float lambda_high_priority;
-    public float lambda_boss;
+    private float _AfterHalfSampler(float lambda)
+    {
+        return Random.Range(game_time_limit / 2, 3 * game_time_limit / 4);
+    }
+
+    public float RandomGenerateTime(LevelSetting.GenerateMethod method, float lambda)
+    {
+        float next_time = 0;
+        switch (method)
+        {
+            case LevelSetting.GenerateMethod.UNIFORM:
+                next_time = _UniformSampler(lambda);
+                break;
+
+            case LevelSetting.GenerateMethod.EXPONENTIAL:
+                next_time = _ExponentialSampler(lambda);
+                break;
+
+            case LevelSetting.GenerateMethod.AFTER_HALF:
+                next_time = _AfterHalfSampler(lambda);
+                break;
+        }
+        return next_time;
+    }
 
     internal void Start()
     {
+        people_prefab_list = Resources.LoadAll<GameObject>(prefab_path);
+        Debug.Log("people_prefab_list length: " + people_prefab_list.Length);
         return;
     }
 
@@ -28,10 +65,15 @@ public class PeopleGenerator: MonoBehaviour
         return;
     }
 
-    public GameObject Generate(Vector2 position, Quaternion quad, UnityEngine.Transform transform)
+    public GameObject Generate(Vector2 position, Quaternion quad, UnityEngine.Transform transform, Floor.ColorFlag color_flag)
     {
+        if (generate_people_limit != 0)
+            if (generate_people_count >= generate_people_limit)
+                return null;
+        generate_people_count++;
+        int apperance = Random.Range(0, people_prefab_list.Length);
         GameObject genrated_gameobj = Instantiate(
-            people_prefab,
+            people_prefab_list[apperance],
             position,
             quad,
             transform
@@ -42,6 +84,13 @@ public class PeopleGenerator: MonoBehaviour
 
 public class Floor : MonoBehaviour
 {
+    public enum ColorFlag
+    {
+        NORMAL,
+        YELLOW,
+        BLUE,
+    }
+
     public bool is_ground_floor;
     public GameObject people_prefab;
     public List<GameObject> queue;
@@ -83,7 +132,7 @@ public class Floor : MonoBehaviour
     {
         for (int i = 0; i < queue.Count; i++)
         {
-            queue[i].GetComponent<People>().target_pos = queue[i].GetComponent<People>().target_pos - 
+            queue[i].GetComponent<People>().target_pos = queue[i].GetComponent<People>().target_pos -
                                                          new Vector2(people_interval - Random.Range(-0.05f, 0.05f), 0);
         }
     }
@@ -98,7 +147,7 @@ public class Floor : MonoBehaviour
     public void EnQueue()
     {
         Vector2 new_pos = (Vector2)transform.position +
-                          new Vector2(-2f + queue.Count * people_interval + Random.Range(-0.1f, 0.1f),-0.4f + Random.Range(-0.1f, 0.1f));                             // y
+                          new Vector2(-2f + queue.Count * people_interval + Random.Range(-0.1f, 0.1f), -0.4f + Random.Range(-0.1f, 0.1f));                             // y
         GameObject new_people = Instantiate(
             people_prefab,
             new_pos,
