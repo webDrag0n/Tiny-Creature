@@ -41,7 +41,7 @@ public class UIChatBox : MonoBehaviour
             string name = script_names.Dequeue();
             string message = script_lines.Dequeue();
             GameObject new_chat_box_line = Instantiate(chat_box_line, new Vector2(0, 0), Quaternion.identity, transform);
-            new_chat_box_line.transform.localPosition = new Vector2(40, 440 - counter * 170);
+            new_chat_box_line.transform.localPosition = new Vector2(40, 340 - counter * 170);
             new_chat_box_line.GetComponentInChildren<TMPro.TMP_Text>().text = name + "\n" + message;
             counter++;
         }

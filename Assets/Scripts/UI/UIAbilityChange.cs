@@ -21,7 +21,7 @@ public class UIAbilityChange : MonoBehaviour
         {
             case Ability.move_speed:
                 game_state.move_speed += value_change;
-                if (game_state.move_speed < 0)
+                if (game_state.move_speed < 10 || game_state.move_speed > 100)
                 {
                     // Revert operation if sell ability but value is less than 0
                     game_state.move_speed -= value_change;
@@ -31,9 +31,9 @@ public class UIAbilityChange : MonoBehaviour
                 break;
             case Ability.capacity:
                 game_state.capacity += (int)value_change;
-                if (game_state.capacity < 0)
+                if (game_state.capacity < 1 || game_state.capacity > 10)
                 {
-                    // Revert operation if sell ability but value is less than 0
+                    // Revert operation if change ability but value is out of range
                     game_state.capacity -= (int)value_change;
                     return;
                 }
@@ -41,7 +41,7 @@ public class UIAbilityChange : MonoBehaviour
                 break;
             case Ability.boss_value:
                 game_state.boss_value += (int)value_change;
-                if (game_state.boss_value < 0)
+                if (game_state.boss_value < 10)
                 {
                     // Revert operation if sell ability but value is less than 0
                     game_state.boss_value -= (int)value_change;
@@ -51,7 +51,7 @@ public class UIAbilityChange : MonoBehaviour
                 break;
             case Ability.booster_speed:
                 game_state.booster_speed += value_change;
-                if (game_state.booster_speed < 0)
+                if (game_state.booster_speed < 10)
                 {
                     // Revert operation if sell ability but value is less than 0
                     game_state.booster_speed -= value_change;
@@ -61,7 +61,7 @@ public class UIAbilityChange : MonoBehaviour
                 break;
             case Ability.booster_duration:
                 game_state.booster_duration += value_change;
-                if (game_state.booster_duration < 0)
+                if (game_state.booster_duration < 1)
                 {
                     // Revert operation if sell ability but value is less than 0
                     game_state.booster_duration -= value_change;

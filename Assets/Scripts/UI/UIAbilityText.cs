@@ -19,7 +19,7 @@ public class UIAbilityText : MonoBehaviour
         switch (target_ability)
         {
             case Ability.move_speed:
-                ability_text.text = ((int)(game_states.move_speed*100)).ToString();
+                ability_text.text = ((int)game_states.move_speed).ToString();
                 break;
             case Ability.capacity:
                 ability_text.text = game_states.capacity.ToString();

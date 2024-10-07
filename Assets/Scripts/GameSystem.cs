@@ -15,7 +15,7 @@ public class GameSystem : MonoBehaviour
     {
         SceneManager.SetActiveScene(SceneManager.GetSceneByName("Game"));
         game_settings.init_building_levels = game_states.building_levels;
-        building = bg.Generate(game_settings);
+        building = bg.Generate(game_settings, game_states);
         Camera.main.orthographicSize = 6 + game_settings.init_building_levels / 2;
         game_states.timer = 0;
         game_states.player_life = game_settings.init_player_life;
@@ -28,7 +28,7 @@ public class GameSystem : MonoBehaviour
         if (game_states.game_status == GameStatus.in_game_playing && game_states.timer >= game_settings.game_time_limit)
         {
             // If money reached required amount
-            if (game_states.player_money_ingame > 300)
+            if (game_states.player_money_ingame >= 300)
             {
                 // Round won;
                 game_states.game_status = GameStatus.in_game_won_paused;

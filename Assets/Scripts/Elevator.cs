@@ -30,6 +30,9 @@ public class Elevator : MonoBehaviour
     private Vector2 init_pos;
     public Vector2 target_pos;
 
+    // 0 or 1
+    private int elevator_id;
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -51,7 +54,10 @@ public class Elevator : MonoBehaviour
 
     private void Update()
     {
+        // Move smoothly and shake a bit
+        float distance = Vector2.Distance((Vector2)transform.position, target_pos);
         transform.position = Vector2.Lerp(transform.position, target_pos, Time.deltaTime * 10);
+        transform.position = (Vector2)transform.position + new Vector2(0.01f * Random.Range(-distance, distance), 0);
 
         // Show capacity in inGame GUI
         capacity_display.text = people_amount_inside + "/" + max_capacity;
@@ -72,6 +78,17 @@ public class Elevator : MonoBehaviour
     private void FixedUpdate()
     {
         target_pos = init_pos + new Vector2(0, 1.05f * current_level);
+
+        // Sync door open status to game_states
+        if (elevator_id == 0)
+        {
+            game_states.elevator1_door_opened = is_door_opened;
+        }
+        else if (elevator_id == 1)
+        {
+            game_states.elevator2_door_opened = is_door_opened;
+        }
+
         if (is_door_opened)
         {
             door.SetActive(true);
@@ -95,7 +112,7 @@ public class Elevator : MonoBehaviour
         {
             door.SetActive(false);
             timer += Time.fixedDeltaTime;
-            if (timer > 1 / move_speed)
+            if (timer > 1 / (move_speed / 50))
             {
                 timer = 0;
                 Move(direction);
@@ -134,6 +151,27 @@ public class Elevator : MonoBehaviour
     {
         if (building.GetAmountOfPeopleInFloor(_floor) > 0)
         {
+            int[][] elevator_id_passengers = new int[2][];
+            // Shallow copy: reference to original array stored in elevator_id_passengers
+            elevator_id_passengers[0] = game_states.elevator1_passengers;
+            elevator_id_passengers[1] = game_states.elevator2_passengers;
+
+            for (int i = 0; i < elevator_id_passengers[elevator_id].Length; i++)
+            {
+                if (elevator_id_passengers[elevator_id][i] == 0)
+                {
+                    // Should check people type here and assign to elevator
+                    // Currently at random [1-7]
+
+                    // Different types of people has different values
+                    // 0: empty, 1: normal, 2: blue people, 3: yellow people
+                    //           4: N High, 3: B High value,6: Y High value
+                    //           7: Boss
+                    elevator_id_passengers[elevator_id][i] = Random.Range(1, 8);
+                    break;
+                }
+            }
+
             building.floors[_floor].Dequeue();
             people_amount_inside += 1;
         }
@@ -141,7 +179,36 @@ public class Elevator : MonoBehaviour
 
     private void ReleasePeople()
     {
-        game_states.player_money_ingame += people_amount_inside * 100;
+        //game_states.player_money_ingame += people_amount_inside * 100;
+        int[][] elevator_id_passengers = new int[2][];
+        elevator_id_passengers[0] = game_states.elevator1_passengers;
+        elevator_id_passengers[1] = game_states.elevator2_passengers;
+
+        for(int i = 0; i < elevator_id_passengers[elevator_id].Length; i++)
+        {
+            // Different types of people has different values
+            // 0: empty, 1: normal, 2: blue people, 3: yellow people
+            //           4: N High, 3: B High value,6: Y High value
+            //           7: Boss
+            int passenger_type = elevator_id_passengers[elevator_id][i];
+            if (passenger_type > 0 && passenger_type <= 3)
+            {
+                // Low value people
+                game_states.player_money_ingame += 20;
+            }
+            else if (passenger_type > 3 && passenger_type <= 6)
+            {
+                // High value people
+                game_states.player_money_ingame += 100;
+            }
+            else if (passenger_type == 7)
+            {
+                // Boss
+                game_states.player_money_ingame += game_states.boss_value;
+            }
+            elevator_id_passengers[elevator_id][i] = 0;
+        }
+
         people_amount_inside = 0;
         // play people get out animation
     }
