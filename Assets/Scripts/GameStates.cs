@@ -34,7 +34,7 @@ public class GameStates : ScriptableObject
 
     // Different types of people has different values
     // 0: empty, 1: normal, 2: blue people, 3: yellow people
-    //           4: N High, 3: B High value,6: Y High value
+    //           4: N High, 5: B High value,6: Y High value
     //           7: Boss
     public int[] elevator1_passengers;
     public int[] elevator2_passengers;

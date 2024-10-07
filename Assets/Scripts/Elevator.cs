@@ -156,18 +156,47 @@ public class Elevator : MonoBehaviour
             elevator_id_passengers[0] = game_states.elevator1_passengers;
             elevator_id_passengers[1] = game_states.elevator2_passengers;
 
+            int new_passenger_type = Random.Range(1, 8);
+
+            // Check if there is yellow people if the current one is blue
+            if (new_passenger_type == 2 || new_passenger_type == 5)
+            {
+                foreach(int passenger_type in elevator_id_passengers[elevator_id])
+                {
+                    if (passenger_type == 3 || passenger_type == 6)
+                    {
+                        // Lost directly if different colors were put together
+                        game_states.game_status = GameStatus.in_game_lost_paused;
+                    }
+                }
+            }
+
+            // Check if there is blue people if the current one is yellow
+            if (new_passenger_type == 3 || new_passenger_type == 6)
+            {
+                foreach (int passenger_type in elevator_id_passengers[elevator_id])
+                {
+                    if (passenger_type == 2 || passenger_type == 5)
+                    {
+                        // Lost directly if different colors were put together
+                        game_states.game_status = GameStatus.in_game_lost_paused;
+                    }
+                }
+            }
+
             for (int i = 0; i < elevator_id_passengers[elevator_id].Length; i++)
             {
                 if (elevator_id_passengers[elevator_id][i] == 0)
                 {
-                    // Should check people type here and assign to elevator
-                    // Currently at random [1-7]
 
                     // Different types of people has different values
                     // 0: empty, 1: normal, 2: blue people, 3: yellow people
-                    //           4: N High, 3: B High value,6: Y High value
+                    //           4: N High, 5: B High value,6: Y High value
                     //           7: Boss
-                    elevator_id_passengers[elevator_id][i] = Random.Range(1, 8);
+
+                    // Should check people type here and assign to elevator
+                    // Currently at random [1-7]
+                    elevator_id_passengers[elevator_id][i] = new_passenger_type;
                     break;
                 }
             }
@@ -188,7 +217,7 @@ public class Elevator : MonoBehaviour
         {
             // Different types of people has different values
             // 0: empty, 1: normal, 2: blue people, 3: yellow people
-            //           4: N High, 3: B High value,6: Y High value
+            //           4: N High, 5: B High value,6: Y High value
             //           7: Boss
             int passenger_type = elevator_id_passengers[elevator_id][i];
             if (passenger_type > 0 && passenger_type <= 3)
