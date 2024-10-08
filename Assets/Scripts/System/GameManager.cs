@@ -182,6 +182,11 @@ public class GameManager : MonoBehaviour
         SceneManager.UnloadSceneAsync("Game");
     }
 
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+
     public void SaveSettings()
     {
         settings.background_music_volume = (int)(slider.value * 10000);
